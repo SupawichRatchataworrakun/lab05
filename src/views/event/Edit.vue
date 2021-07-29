@@ -16,7 +16,7 @@ export default {
         param: { id: this.event.id }
       })
 
-      this.GStore.flashMessage = 'The data has been updated ' 
+      this.GStore.flashMessage = 'The data has been updated '
       setTimeout(() => {
         this.GStore.flashMessage = ''
       }, 3000)

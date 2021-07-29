@@ -7,6 +7,7 @@ import EventEdit from '@/views/event/Edit.vue'
 import EventLayout from '@/views/event/Layout.vue'
 import NotFound from '@/views/NotFound.vue'
 import NetWorkError from '@/views/NetworkError.vue'
+import nProgress from 'nprogress'
 const routes = [
   {
     path: '/',
@@ -65,6 +66,14 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+//เรียกคำสั่งมาใส่ในนี้แทน
+router.beforeEach(() => {
+  nProgress.start()
+})
+router.afterEach(() => {
+  nProgress.done()
 })
 
 export default router

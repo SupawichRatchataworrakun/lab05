@@ -29,6 +29,7 @@
 import EventCard from '@/components/EventCard.vue'
 import EventService from '@/services/EventService.js'
 import { watchEffect } from '@vue/runtime-core'
+
 // import axios from 'axios'
 export default {
   name: 'EventList',
@@ -38,6 +39,7 @@ export default {
       required: true
     }
   },
+
   components: {
     EventCard // register it as a child component
   },
@@ -58,6 +60,32 @@ export default {
           console.log(error)
         })
     })
+  },
+  //สร้าง use the progress bar
+  //check state
+  beforeRouteEnter(routeTo, routeFrom, next) {
+    EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
+      .then((response) => {
+        next((comp) => {
+          comp.events = response.data
+          comp.totalEvents = response.headers['x-total-count']
+        })
+      })
+      .catch(() => {
+        next({ name: 'NetworkError' })
+      })
+  },
+  beforeRouteUpdate(routeTo, routeFrom, next) {
+    EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
+      .then((response) => {
+        this.events = response.data // <----
+        this.totalEvents = response.headers['x-total-count'] // <----
+        next() // <----
+      })
+      .catch(() => {
+        next({ name: 'NetworkError' })
+      })
+    // eslint-disable-next-line no-unused-vars
   },
   computed: {
     hasNextPage() {

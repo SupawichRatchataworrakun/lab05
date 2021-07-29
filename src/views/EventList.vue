@@ -63,20 +63,22 @@ export default {
   },
   //สร้าง use the progress bar
   //check state
+
+  // eslint-disable-next-line no-unused-vars
   beforeRouteEnter(routeTo, routeFrom, next) {
-    EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
+    EventService.getEvents(3, parseInt(routeTo.query.page) || 1)
       .then((response) => {
         next((comp) => {
           comp.events = response.data
           comp.totalEvents = response.headers['x-total-count']
         })
-      })
+      })  
       .catch(() => {
         next({ name: 'NetworkError' })
       })
   },
   beforeRouteUpdate(routeTo, routeFrom, next) {
-    EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
+    EventService.getEvents(3, parseInt(routeTo.query.page) || 1)
       .then((response) => {
         this.events = response.data // <----
         this.totalEvents = response.headers['x-total-count'] // <----
@@ -85,12 +87,11 @@ export default {
       .catch(() => {
         next({ name: 'NetworkError' })
       })
-    // eslint-disable-next-line no-unused-vars
   },
   computed: {
     hasNextPage() {
       // First, calculate total pages
-      let totalPages = Math.ceil(this.totalEvents / 2) // 2 is events per page
+      let totalPages = Math.ceil(this.totalEvents / 3) // 2 is events per page
 
       // Then check to see if the current page is less than the total pages.
       return this.page < totalPages

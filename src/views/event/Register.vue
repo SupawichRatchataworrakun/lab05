@@ -18,9 +18,9 @@ export default {
 
       this.$router.push({
         name: 'EventDetails',
-        param: { id: this.event.id}
-      }) 
-      
+        param: { id: this.event.id }
+      })
+
       //ขึ้้นโชว์ข้อความ
       this.GStore.flashMessage =
         'You are successfully registered for ' + this.event.title
